@@ -10,9 +10,9 @@ def index():
     weather_data = None
     if request.method == "POST":
         city = request.form.get("city")
-        if city:
+        '''if city:
             weather_data = get_weather(city, app.config["OPENWEATHER_API_KEY"])
         else:
             return redirect(url_for("index"))
-        
+        '''
     return render_template("index.html", weather = weather_data)

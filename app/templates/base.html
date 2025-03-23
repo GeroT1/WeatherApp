@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{% endblock %} - Weather App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    {% if g.city %}
+    <nav>
+        <h1>Weather App</h1>
+        <ul>
+            <li><span>{{ g.city['name'] }}</span></li>
+            <li>
+                <form action="{{ url_for('search') }}" method="POST" class="search-form">
+                    <input type="text" name="city" placeholder="Buscar ciudad..." required>
+                    <button type="submit">Buscar</button>
+                </form>
+            </li>
+        </ul>
+    </nav>
+    {% endif %}
+
+    <section class="content">
+        {% for message in get_flashed_messages() %}
+            <div class="flash">{{ message }}</div>
+        {% endfor %}
+
+        {% blockcontent %}{% endblock %}
+    </section>
+</body>
+</html>
