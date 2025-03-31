@@ -1,18 +1,24 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, g
 from config import Config
+from weather import WeatherService
 
 app = Flask(__name__)
-app.config.from_object(Config)
+app.config['SECRET_KEY'] = Config.SECRET_KEY
 
+weather_service = WeatherService()
+
+@app.before_request
+def load_city():
+    g.city = None
+    city = request.cookies.get('city')
+    if city:
+        g.city = {"name": city}
 
 @app.route("/", methods=["GET", "POST"])
 def index():
-    weather_data = None
-    if request.method == "POST":
-        city = request.form.get("city")
-        '''if city:
-            weather_data = get_weather(city, app.config["OPENWEATHER_API_KEY"])
-        else:
-            return redirect(url_for("index"))
-        '''
-    return render_template("index.html", weather = weather_data)
+    if g.city:
+        return redirect(url_for("weather", city=g.city['name']))
+    return render_template("index.html")
+
+if __name__ == '__main__':
+    app.run(debug=True)

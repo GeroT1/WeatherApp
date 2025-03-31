@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="search-container">
+    <h2>Welcome to Weather App</h2>
+    <p>Check the weather in any city</p>
+
+    <form action="{{ url_for('search') }}" method="post" class="main-search-form">
+        <input type="text" name="city" placeholder="Enter city name" required>
+        <button type="submit">Search forecast</button>
+    </form>
+</div>
+{% endblock %}
