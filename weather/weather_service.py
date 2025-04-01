@@ -1,24 +1,30 @@
 import requests
 from datetime import datetime
-from config import Config
+from .config import Config
 
 class WeatherService:
     def __init__(self):
         self.api_key = Config.OPENWEATHER_API_KEY
         self.base_url = "http://api.openweathermap.org/data/2.5/weather"
         self.units = "metric"
-        self.lang = "es"
+        self.lang = "en"
 
-    def get_current_weather(self, city):
- 
+    def get_weather_data(self, city):
         try:
-            
             current_response = requests.get(
-                f"{self.base_url}?q={city}&appid={self.api_key}&units=metric&lang=es"
+                f"{self.base_url}?q={city}&appid={self.api_key}&units={self.units}&lang={self.lang}"
+                
             )
 
+            if current_response.status_code == 404:
+                print("City not found")
+                return None, None
+
             if current_response.status_code != 200:
-                return None
+                print(f"Error fetching weather data: {current_response.status_code}")
+                return None, None
+            
+            
             
             current_data = current_response.json()
 
@@ -31,9 +37,10 @@ class WeatherService:
                 "city_name": current_data["name"],
                 "country": current_data["sys"].get("country", "")
             }
-
+            """
+            # Forecast data is not available in the free version of the API.
             forecast_response = requests.get(
-                f"{self.base_url}forecast?q=¨{city}&appid={self.api_key}&units=metric&lang=es&cnt=40"
+                f"{self.base_url}/forecast?q={city}&appid={self.api_key}&units=={self.units}&lang={self.lang}&cnt=40"
             )
 
             if forecast_response.status_code != 200:
@@ -60,8 +67,12 @@ class WeatherService:
                     if len(forecast) >= 5:
                         break
 
-            return current, forecast
+
+            return current, forecast       
+            """
+
+            return current, []  # Temporarily returning an empty forecast list because the api is the free version and does not support forecast data.
 
         except Exception as e:
             print(f"Error fetching weather data:{e}")
-            return None
+            return None, None

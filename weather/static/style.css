@@ -1,0 +1,330 @@
+/* Base styles and variables */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2980b9;
+    --background-color: #f5f7fa;
+    --card-background: #ffffff;
+    --text-color: #333;
+    --text-light: #888;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --border-radius: 8px;
+    --transition: all 0.3s ease;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
+    line-height: 1.6;
+  }
+  
+.titulo {
+    text-decoration: none; /* Quita el subrayado */
+    color: inherit; /* Mantiene el color del texto del h1 */
+    cursor: pointer; /* Asegura que se vea como un enlace cuando pasas el mouse */
+}
+
+  /* Navigation */
+  nav {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: var(--shadow);
+  }
+  
+  nav h1 {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+  
+  nav ul {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    gap: 1.5rem;
+  }
+  
+  nav ul li span {
+    font-weight: 500;
+  }
+  
+  .search-form {
+    display: flex;
+    gap: 0.5rem;
+  }
+  
+  .search-form input {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: var(--border-radius);
+    width: 200px;
+    font-size: 0.9rem;
+  }
+  
+  .search-form button {
+    background-color: var(--secondary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    transition: var(--transition);
+  }
+  
+  .search-form button:hover {
+    background-color: #1c6ea4;
+  }
+  
+  /* Main content container */
+  .content {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1.5rem;
+  }
+  
+  /* Flash messages */
+  .flash {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: var(--border-radius);
+    text-align: center;
+  }
+  
+  /* Home page styles */
+  .search-container {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 3rem 2rem;
+    text-align: center;
+    box-shadow: var(--shadow);
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .search-container h2 {
+    margin-bottom: 1rem;
+    font-weight: 500;
+    color: var(--primary-color);
+  }
+  
+  .search-container p {
+    margin-bottom: 2rem;
+    color: var(--text-light);
+  }
+  
+  .main-search-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-width: 400px;
+    margin: 0 auto;
+  }
+  
+  .main-search-form input {
+    padding: 0.8rem 1.2rem;
+    border: 1px solid #ddd;
+    border-radius: var(--border-radius);
+    font-size: 1rem;
+  }
+  
+  .main-search-form button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.8rem 1.2rem;
+    border-radius: var(--border-radius);
+    cursor: pointer;
+    font-size: 1rem;
+    transition: var(--transition);
+  }
+  
+  .main-search-form button:hover {
+    background-color: var(--secondary-color);
+  }
+  
+  /* Weather page styles */
+  .weather-container {
+    background-color: var(--card-background);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    box-shadow: var(--shadow);
+  }
+  
+  .weather-container h2 {
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+  }
+  
+  .weather-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .temperature {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .temp-value {
+    font-size: 3rem;
+    font-weight: 300;
+  }
+  
+  .temp-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .weather-icon {
+    width: 80px;
+    height: 80px;
+  }
+  
+  .description {
+    text-transform: capitalize;
+    color: var(--text-light);
+    font-size: 1.1rem;
+  }
+  
+  .details {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    flex-wrap: wrap;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .detail-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2rem;
+  }
+  
+  .detail-item {
+    color: var(--text-color);
+  }
+  
+  /* Forecast section */
+  .forecast {
+    margin-top: 1rem;
+  }
+  
+  .forecast h3 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    font-weight: 500;
+    font-size: 1.2rem;
+    color: var(--text-color);
+  }
+  
+  .forecast-items {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+  
+  .forecast-day {
+    background-color: #f9f9f9;
+    border-radius: var(--border-radius);
+    padding: 1rem;
+    min-width: 120px;
+    text-align: center;
+    transition: var(--transition);
+  }
+  
+  .forecast-day:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow);
+  }
+  
+  .day-name {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+  }
+  
+  .forecast-icon {
+    width: 50px;
+    height: 50px;
+    margin: 0.5rem 0;
+  }
+  
+  .temp-range {
+    color: var(--text-light);
+    font-size: 0.9rem;
+  }
+  
+  /* Action buttons */
+  .actions {
+    margin-top: 2rem;
+    text-align: center;
+  }
+  
+  .btn-clear {
+    display: inline-block;
+    background-color: #f1f1f1;
+    color: var(--text-color);
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+  }
+  
+  .btn-clear:hover {
+    background-color: #e4e4e4;
+  }
+  
+
+
+  /* Responsive design */
+  @media (max-width: 768px) {
+    nav {
+      flex-direction: column;
+      padding: 1rem;
+      gap: 1rem;
+    }
+    
+    nav ul {
+      flex-direction: column;
+      width: 100%;
+    }
+    
+    .search-form {
+      width: 100%;
+    }
+    
+    .search-form input {
+      width: 100%;
+    }
+    
+    .temperature {
+      flex-direction: column;
+    }
+    
+    .details {
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+  }

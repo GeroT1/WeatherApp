@@ -10,11 +10,11 @@
 <body>
     {% if g.city %}
     <nav>
-        <h1>Weather App</h1>
+        <h1><a href="{{ url_for('main.clear') }}" class="titulo">Weather App</a></h1>
         <ul>
             <li><span>{{ g.city['name'] }}</span></li>
             <li>
-                <form action="{{ url_for('search') }}" method="POST" class="search-form">
+                <form action="{{ url_for('main.search') }}" method="POST" class="search-form">
                     <input type="text" name="city" placeholder="Buscar ciudad..." required>
                     <button type="submit">Buscar</button>
                 </form>
@@ -28,7 +28,7 @@
             <div class="flash">{{ message }}</div>
         {% endfor %}
 
-        {% blockcontent %}{% endblock %}
+        {% block content %}{% endblock %}
     </section>
 </body>
 </html>

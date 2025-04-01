@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block title %}Forecast in {{ weather.city_name }}{% endblock %}
+
+{% block content %}
+<div class="weather-container">
+    <h2>{{ weather.city_name }}{% if weather.country %}, {{ weather.country }}{% endif %}</h2>
+
+    <div class="weather-info">
+        <div class="temperature">
+            <span class="temp-value">{{ weather.temperature }}°C</span>
+            <div class="temp-details">
+                <img src="{{ weather.icon_url}}" alt="Weather icon" class="weather-icon">
+                <span class="description">{{ weather.description }}</span>
+            </div>
+        </div>
+
+        <div class="details">
+            <div class="detail-row">
+                <div class="detail-row">
+                    <strong>Humidity: </strong> {{ weather.humidity }}%
+                </div>
+                <div class="detail-item">
+                    <strong>Wind speed: </strong> {{ weather.wind_speed }} km/h
+                </div>
+            </div>
+        </div>
+
+        <div class="forecast">
+            <h3>Forecast for the next few days. (Information not available due to the API version.)</h3>
+            <div class="forecast-items">
+                {% for day in forecast %}
+                <div class="forecast-day">
+                    <p class="day-name">{{ day.name }}</p>
+                    <img src="{{ day.icon_url }}" alt="Weather icon" class="forecast-icon">
+                    <p class="temp-range">{{ day.temp_min }}°C / {{ day.temp_max }}°C</p>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="actions">
+        <a href="{{ url_for('main.clear') }}" class="btn-clear">Back to Home</a>
+    </div>
+    
+</div>
+{% endblock %}
