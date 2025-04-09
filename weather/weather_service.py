@@ -6,6 +6,7 @@ class WeatherService:
     def __init__(self):
         self.api_key = Config.OPENWEATHER_API_KEY
         self.base_url = "http://api.openweathermap.org/data/2.5/weather"
+        self.base_url_forecast = "http://api.openweathermap.org/data/2.5/forecast"
         self.units = "metric"
         self.lang = "en"
 
@@ -37,41 +38,52 @@ class WeatherService:
                 "city_name": current_data["name"],
                 "country": current_data["sys"].get("country", "")
             }
-            """
-            # Forecast data is not available in the free version of the API.
+            
             forecast_response = requests.get(
-                f"{self.base_url}/forecast?q={city}&appid={self.api_key}&units=={self.units}&lang={self.lang}&cnt=40"
+                f"{self.base_url_forecast}?q={city}&appid={self.api_key}&units={self.units}&lang={self.lang}&cnt=40"
             )
 
             if forecast_response.status_code != 200:
+                print(f"Error fetching forecast data: {forecast_response.status_code}")
                 return current, []
             
             forecast_data = forecast_response.json()
 
-            forecast = []
-            days_added = set()
+            daily_data = {}
 
             for item in forecast_data["list"]:
                 dt = datetime.fromtimestamp(item["dt"])
                 day_str = dt.strftime("%Y-%m-%d")
 
-                if day_str not in days_added and dt.hour in [11, 12, 13, 14]:
-                    days_added.add(day_str)
-                    forecast.append({
+                if day_str not in daily_data:
+                    daily_data[day_str] = {
                         "date": dt.strftime("%a %d"),
-                        "temp_min": round(item["main"]["temp_min"]),
-                        "temp_max": round(item["main"]["temp_max"]),
-                        "icon_url": f"http://openweathermap.org/img/wn/{item['weather'][0]['icon']}.png"
-                    })
+                        "temp_min": 9999,
+                        "temp_max": -9999,
+                        "icon": None,
+                        "icon_count": {}
+                    }
 
-                    if len(forecast) >= 5:
-                        break
+                daily_data[day_str]["temp_min"] = min(daily_data[day_str]["temp_min"], item["main"]["temp_min"])
+                daily_data[day_str]["temp_max"] = max(daily_data[day_str]["temp_max"], item["main"]["temp_max"])
 
+                icon = item["weather"][0]["icon"]
+                daily_data[day_str]["icon_count"][icon] = daily_data[day_str]["icon_count"].get(icon, 0) + 1
 
-            return current, forecast       
-            """
+            forecast = []
+            for day_str in sorted(daily_data.keys())[:5]:
+                day_info = daily_data[day_str]
+                most_common_icon = max(day_info["icon_count"].items(), key=lambda x: x[1])[0]
 
-            return current, []  # Temporarily returning an empty forecast list because the api is the free version and does not support forecast data.
+                forecast.append({
+                    "date": day_info["date"],
+                    "temp_min": round(day_info["temp_min"]),
+                    "temp_max": round(day_info["temp_max"]),
+                    "icon_url": f"http://openweathermap.org/img/wn/{most_common_icon}.png"
+                })
+
+            return current, forecast
+
 
         except Exception as e:
             print(f"Error fetching weather data:{e}")
